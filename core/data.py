@@ -23,3 +23,10 @@ def vectorize_dataset(df):
     X = np.zeros((len(df), len(VectorColumns)))
     Y = np.zeros(len(df))
 
+    for index, email_address, is_spam in df.itertuples():
+        X[index][VectorColumns.HAS_AT_SIGN.value] = 1 if has_at_sign(email_address) else 0
+        X[index][VectorColumns.PRE_AT_LENGTH.value] = pre_at_length(email_address)
+
+        Y[index] = float(is_spam)
+
+    return X, Y
