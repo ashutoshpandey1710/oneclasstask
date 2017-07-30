@@ -15,7 +15,9 @@ def has_at_sign(email_address):
 
 def pre_at_length(email_address):
     if has_at_sign(email_address):
-        return
+        return len(email_address[:email_address.index('@')])
+    else:
+        return 0
 
 def vectorize_dataset(df):
     X = np.zeros((len(df), len(VectorColumns)))

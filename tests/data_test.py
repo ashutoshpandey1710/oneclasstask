@@ -22,7 +22,7 @@ class DataTest(TestCase):
 
     def test_has_at_sign(self):
         positive_case = "e9b0f521a11ecd1ff560@gmail.com"
-        negative_case = "e90gmail.com"
+        negative_case = "gmail.com"
 
         self.assertTrue(has_at_sign(positive_case), "has_at_sign failed for string {}".format(positive_case))
         self.assertFalse(negative_case, "has_at_sign failed for string {}".format(negative_case))
@@ -32,7 +32,7 @@ class DataTest(TestCase):
         self.assertEqual(short, 1, msg="pre_at_length failed at {}, Returned length: {}.".format("f@gmail.com", short))
 
         long = pre_at_length("7dfb68997ecdc9755f90gmail.com")
-        self.assertEqual(long, len("7dfb68997ecdc9755f90"), msg="pre_at_length failed at {}, Returned length: {}.".format("7dfb68997ecdc9755f90gmail.com", long))
+        self.assertEqual(long, 0, msg="pre_at_length failed at {}, Returned length: {}.".format("7dfb68997ecdc9755f90gmail.com", long))
 
 
     def test_vectorize_dataset(self):
