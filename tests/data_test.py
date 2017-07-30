@@ -3,7 +3,7 @@ from unittest import TestCase
 import pandas as pd
 import sys
 
-from core.data import get_dataset_as_dataframe, vectorize_dataset, has_at_sign, pre_at_length
+from core.data import get_dataset_as_dataframe, vectorize_dataset, has_at_sign, pre_at_length, vectorize_from_string
 
 sys.argv = ['', '--pytest', '-l']
 
@@ -46,3 +46,11 @@ class DataTest(TestCase):
         self.assertAlmostEqual(Y[5], 1., places=4)
         self.assertAlmostEqual(Y[6], 0., places=4)
         self.assertAlmostEqual(Y[7], 1., places=4)
+
+    def test_vectorize_from_string(self):
+        cases = [("f560@gmail.com", 1, 4), ("gmail.com", 0, 0), ('ssnmgmail.com', 0, 0), ('abc@six.com', 1, 3)]
+
+        for email_address, at_present, pre_at_len in cases:
+            X = vectorize_from_string(email_address)
+            self.assertAlmostEqual(X[0], at_present, msg="%s has at sign. Not found by function." % (email_address) )
+            self.assertAlmostEqual(X[1], pre_at_len, places=3, msg="Pre @ length is incorrect. Expected: %f, Found: %f." % (pre_at_len, X[1]))

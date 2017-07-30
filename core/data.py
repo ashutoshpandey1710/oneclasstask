@@ -30,3 +30,10 @@ def vectorize_dataset(df):
         Y[index] = float(is_spam)
 
     return X, Y
+
+def vectorize_from_string(email_address):
+    X = np.zeros(len(VectorColumns))
+    X[VectorColumns.HAS_AT_SIGN.value] = 1 if has_at_sign(email_address) else 0
+    X[VectorColumns.PRE_AT_LENGTH.value] = pre_at_length(email_address)
+
+    return X
