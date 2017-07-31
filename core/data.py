@@ -15,7 +15,7 @@ def has_at_sign(email_address):
 
 def pre_at_length(email_address):
     if has_at_sign(email_address):
-        return len(email_address[:email_address.index('@')])
+        return 1 if len(email_address[:email_address.index('@')]) > 2 else 0
     else:
         return 0
 
