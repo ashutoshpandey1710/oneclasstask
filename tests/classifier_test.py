@@ -5,6 +5,7 @@ from sklearn.metrics import accuracy_score
 
 from core.classify import RuleBasedClassifier, MLClassifier
 from core.data import vectorize_dataset
+import numpy as np
 
 sys.argv = ['', '--pytest', '-l']
 
@@ -36,4 +37,8 @@ class MLClassifierAccuracyTest(TestCase):
 
     def test_ml_classifier(self):
         print("Best Accuracy score: %0.3f" % self.model.best_score)
+        X, Y = vectorize_dataset(self.df)
+        Y_pred = self.model.grid_search.predict(X)
+        print(Y_pred, Y)
+        print(accuracy_score(Y, Y_pred))
         self.assertGreaterEqual(self.model.best_score, 0.8, msg="Accuracy Score below 0.8. Returned value: 1.2f" % (self.model.best_score))
