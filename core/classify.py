@@ -33,8 +33,8 @@ class MLClassifier:
             ('scaler', StandardScaler()),
             ('svm', SVC()),
         ])
-        self.best_estimator = None
         self.best_score = 0.0
+        self.grid_search = None
 
         self.params = {
             'svm__C': (0.1, 0.5, 1., 5., 10.),
@@ -44,18 +44,18 @@ class MLClassifier:
     def train_model(self):
         print("Training Email Address Classifier using Grid Search and SVMs...")
         X, Y = vectorize_dataset(get_dataset_as_dataframe(self.datafile))
-        grid_search = GridSearchCV(self.pipeline, self.params, n_jobs=2, verbose=1)
-        grid_search.fit(X, Y)
+        self.grid_search = GridSearchCV(self.pipeline, self.params, n_jobs=2, verbose=1)
+        self.grid_search.fit(X, Y)
 
-        self.best_estimator = grid_search.best_estimator_
-        self.best_score = grid_search.best_score_
+        self.best_estimator = self.grid_search.best_estimator_
+        self.best_score = self.grid_search.best_score_
         print("Done.")
 
     def predict_spam(self, email_address):
         X = vectorize_from_string(email_address)
 
-        if self.best_estimator:
-           return self.best_estimator.predict(X)
+        if self.grid_search:
+           return self.grid_search.predict(X)
         else:
             print("MLClassifier.predict_spam: Model is not trained yet. Returning -1.")
             return -1.0
