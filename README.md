@@ -1,7 +1,7 @@
 
 ```
 usage: 
-    $ spam_classifier.py [-h] [-f FILE] [-mf MODELFILE] [-e EMAIL] action
+    $ python3 spam_classifier.py [-h] [-f FILE] [-mf MODELFILE] [-e EMAIL] action
 
     
     action can either be train or predict.
